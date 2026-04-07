@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="mn">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ариг Банк - Дансны тодорхойлолт</title>
+    <link href="https://statement.arigbank.mn/img/logo2.png" rel="icon" />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: #fff;
+            margin: 0; padding: 0;
+        }
+
+        /* Header */
+        .stmt-header {
+            background-color: #f1f1f1;
+            padding: 16px 0;
+            border-bottom: 2px solid #bbb;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+            text-align: center;
+        }
+        .stmt-header .hinner {  
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .stmt-header img { height: 42px; }
+        .stmt-header span {
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: #222;
+        }
+
+        /* Body */
+        .stmt-body {
+            max-width: 840px;
+            margin: 0 auto;
+            padding: 36px 30px 120px 30px;
+        }
+
+        /* Top row */
+        .stmt-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 28px;
+        }
+        .logo-area img { height: 50px; }
+        .stmt-meta { font-size: 0.87rem; color: #333; margin-top: 10px; line-height: 1.8; }
+        .deco-area { text-align: right; }
+        .deco-area img { height: 68px; }
+        .deco-area .recipient { font-weight: 700; font-size: 0.87rem; margin-top: 8px; }
+
+        /* Title */
+        .stmt-title {
+            text-align: center;
+            font-size: 1.05rem;
+            font-weight: 800;
+            margin: 20px 0 22px;
+            color: #111;
+        }
+
+        /* Body text */
+        .stmt-text {
+            font-size: 0.92rem;
+            color: #222;
+            line-height: 1.75;
+            text-align: justify;
+            margin-bottom: 24px;
+        }
+
+        /* Table */
+        .stmt-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 12px;
+            font-size: 0.88rem;
+        }
+        .stmt-table th, .stmt-table td {
+            border: 1px solid #999;
+            padding: 10px 14px;
+            text-align: center;
+            color: #222;
+        }
+        .stmt-table th { font-weight: 700; background: #fff; }
+
+        /* Exchange rate */
+        .stmt-rate {
+            text-align: center;
+            font-size: 0.82rem;
+            font-style: italic;
+            color: #444;
+            margin-bottom: 22px;
+        }
+
+        /* Disclaimer */
+        .stmt-disclaimer {
+            font-size: 0.88rem;
+            color: #222;
+            line-height: 1.75;
+            margin-bottom: 40px;
+        }
+
+        /* QR section */
+        .qr-section {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .qr-section img.qr-img {
+            width: 110px;
+            height: 110px;
+            flex-shrink: 0;
+        }
+        .qr-info { font-size: 0.87rem; color: #222; line-height: 1.8; }
+        .qr-info .qr-code-label { font-weight: 700; margin-bottom: 4px; }
+        .qr-info a { color: #1565c0; text-decoration: none; }
+        .qr-info a:hover { text-decoration: underline; }
+
+        /* Divider */
+        .stmt-divider {
+            border: none;
+            border-top: 1.5px solid #999;
+            margin: 10px 0 24px;
+        }
+
+        /* Footer */
+        .stmt-footer {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+        }
+        .footer-left img { height: 100px; }
+        .footer-center {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #333;
+            line-height: 1.9;
+            flex: 1;
+            padding: 0 20px;
+        }
+        .footer-center .footer-title { font-weight: 700; margin-bottom: 6px; }
+        .footer-right {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 8px;
+        }
+        .footer-right .social-row {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            font-size: 0.83rem;
+            color: #444;
+            font-weight: 600;
+        }
+        .footer-right .social-row img { height: 18px; vertical-align: middle; margin-right: 4px; }
+
+        /* Bottom sticky bar */
+        .stmt-bottom-bar {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            background: #fff;
+            border-top: 1px solid #ddd;
+            padding: 13px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            box-shadow: 0 -2px 8px rgba(0,0,0,0.08);
+            z-index: 100;
+        }
+        .stmt-bottom-bar .view-info {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #222;
+        }
+        .btn-print {
+            background: #2e7d32; color: #fff;
+            border: none; border-radius: 5px;
+            padding: 8px 22px; font-size: 0.92rem;
+            font-weight: 700; cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-print:hover { background: #1b5e20; }
+        .btn-exit {
+            background: #546e7a; color: #fff;
+            border: none; border-radius: 5px;
+            padding: 8px 22px; font-size: 0.92rem;
+            font-weight: 700; cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-exit:hover { background: #37474f; }
+
+        @media print {
+            .stmt-bottom-bar { display: none !important; }
+            .stmt-header { box-shadow: none; }
+            body { padding-bottom: 0; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <div class="stmt-header">
+        <div class="hinner">
+            <img src="https://statement.arigbank.mn/img/logo2.png" alt="Ариг Банк">
+            <span>АРИГ БАНК</span>
+        </div>
+    </div>
+
+    <!-- Body -->
+    <div class="stmt-body">
+
+        <!-- Top: logo + meta | deco + recipient -->
+        <div class="stmt-top-row">
+            <div class="logo-area">
+                <img src="https://statement.arigbank.mn/img/logo2.png" alt="logo">
+                <div class="stmt-meta">
+                    Огноо: 2026.04.07<br>
+                    №: A48210
+                </div>
+            </div>
+            <div class="deco-area">
+                <img src="https://statement.arigbank.mn/img/logo3.png" alt="deco" onerror="this.src='/img/logo3.png'">
+                <div class="recipient">ЭСЯ-д</div>
+            </div>
+        </div>
+
+        <!-- Title -->
+        <div class="stmt-title">
+            ДАНСНЫ ГҮЙЛГЭЭ, ҮЛДЭГДЛИЙН БАТАЛГААНЫ ТОДОРХОЙЛОЛТ
+        </div>
+
+        <!-- Body text -->
+        <div class="stmt-text">
+            Ариг банкны харилцагч ДАМДИН овогтой ОДХҮҮ (РД: ЖЯ95090211)-н MN72002100210920 0345 MNT
+            тоот дансаар 2025.11.01 – 2026.04.07 хугацаанд хийгдсэн гүйлгээ, үлдэгдлийг харилцагчийн
+            хүсэлтээр тодорхойлов.
+        </div>
+
+        <!-- Table -->
+        <table class="stmt-table">
+            <thead>
+                <tr>
+                    <th rowspan="2">Эхний үлдэгдэл 2025.11.01</th>
+                    <th colspan="2">Тухайн хугацаанд хийгдсэн гүйлгээний дүн</th>
+                    <th rowspan="2">Эцсийн үлдэгдэл 2026.04.07</th>
+                </tr>
+                <tr>
+                    <th>Орлого</th>
+                    <th>Зарлага</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>21,293,267.00</td>
+                    <td>83,196,956.83</td>
+                    <td>45,065,555.22</td>
+                    <td>59,424,668.61</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Exchange rate -->
+        <div class="stmt-rate">
+            2026.04.07-ний өдрийн Монгол банкны албан ханш: 1 USD = 3573 MNT
+        </div>
+
+        <!-- Disclaimer -->
+        <div class="stmt-disclaimer">
+            Энэхүү тодорхойлтыг гаргасантай холбогдуулж Ариг банк буусдын өмнө аливаа нэгэн
+            үүрэг, хариуцлага хүлээхгүй болно.
+        </div>
+
+        <!-- QR section -->
+        <div class="qr-section">
+            <img class="qr-img"
+                src="https://api.qrserver.com/v1/create-qr-code/?size=110x110&data=https://statement.arigbank.mn/"
+                alt="QR код">
+            <div class="qr-info">
+                <div class="qr-code-label">Баталгаажуулах код: 2026040716093282</div>
+                Энэхүү дансны тодорхойлтыг QR кодоор болон доорх холбоосоор хандаж баталгаажулах боломжтой.<br>
+                <a href="https://statement.arigbank.mn/" target="_blank">https://statement.arigbank.mn/</a>
+            </div>
+        </div>
+
+        <!-- Divider -->
+        <hr class="stmt-divider">
+
+        <!-- Footer -->
+        <div class="stmt-footer">
+            <div class="footer-left">
+                <img src="https://statement.arigbank.mn/img/logo4.png" alt="footer deco"
+                    onerror="this.src='/img/logo3.png'">
+            </div>
+            <div class="footer-center">
+                <div class="footer-title">Энэхүү тодорхойлтыг Ариг Банкны Цахим банкны үйлчилгээнээс гаргав.</div>
+                Хаяг: Чингисийн өргөн чөлөө, Хан-Уул дүүрэг, Улаанбаатар хот 17030, Монгол Улс<br>
+                Утас: <strong>+(976) 7070-1001</strong> | Факс: <strong>+(976) 11 343387</strong> | И-мэйл: <strong>info@arigbank.mn</strong>
+            </div>
+            <div class="footer-right">
+                <div class="social-row">
+                    <span>&#127760; arigbank.mn</span>
+                </div>
+                <div class="social-row">
+                    <span>&#128222; 7070 1001</span>
+                </div>
+                <div class="social-row">
+                    <span>&#64; arigbank</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bottom sticky bar -->
+    <div class="stmt-bottom-bar">
+        <span class="view-info" id="view-info-text">Та уг тодорхойлтыг 3 удаа харах боломжтойгоос 1 удаа харсан байна.</span>
+        <button class="btn-print" onclick="window.print()">Хэвлэх</button>
+        <button class="btn-exit" onclick="window.location.href='index.html'">Гарах</button>
+    </div>
+
+    <script>
+        var MAX_VIEWS = 3;
+        var STORAGE_KEY = 'stmt_views_2026040716093282';
+
+        (function () {
+            var views = parseInt(localStorage.getItem(STORAGE_KEY) || '0', 10);
+            if (views === 0) {
+                // Direct access without going through verify — redirect
+                window.location.href = 'index.html';
+                return;
+            }
+            document.getElementById('view-info-text').textContent =
+                'Та уг тодорхойлтыг ' + MAX_VIEWS + ' удаа харах боломжтойгоос ' + views + ' удаа харсан байна.';
+        })();
+    </script>
+
+</body>
+</html>
